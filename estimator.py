@@ -4,7 +4,6 @@ from sagemaker.pytorch import PyTorch
 if __name__ == '__main__':
     sagemaker_session = sagemaker.Session()
     bucket = sagemaker_session.default_bucket()
-    prefix = "dataset2"
     role = 'arn:aws:iam::507371033430:role/service-role/AmazonSageMaker-ExecutionRole-20211119T082778'
 
     pytorch_estimator = PyTorch('pytorch-train.py',
@@ -17,6 +16,6 @@ if __name__ == '__main__':
                                                  'model-dir': 's3://articles-dataset/models',
                                                  'output-data-dir': 's3://articles-dataset/data_output'})
 
-    pytorch_estimator.fit({'train': 's3://articles-dataset/dataset2/train',
-                           'test': 's3://articles-dataset/dataset2/val',
-                           'control': 's3://articles-dataset/dataset2/control'})
+    pytorch_estimator.fit({'train': 's3://articles-dataset/dataset/train',
+                           'test': 's3://articles-dataset/dataset/val',
+                           'control': 's3://articles-dataset/dataset/control'})

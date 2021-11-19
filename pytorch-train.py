@@ -213,5 +213,7 @@ if __name__ == '__main__':
     check_model_with_control_data(model, args.control, class_names)
 
     # ... train `model`, then save it to `model_dir`
-    with open(os.path.join(args.model_dir, 'model.pth'), 'wb') as f:
-        torch.save(model.state_dict(), f)
+    #model_file_name = 'model_' + str(args.epochs) + '.pth'
+    #with open(os.path.join(args.model_dir, model_file_name), 'x') as f:
+     #   torch.save(model.state_dict(), f)
+    # TODO: Keeps getting a ErrorMessage "FileNotFoundError: [Errno 2] No such file or directory: 's3://articles-dataset/models/model_1.pth'
