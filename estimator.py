@@ -12,9 +12,9 @@ if __name__ == '__main__':
                                 instance_count=1,
                                 framework_version='1.9.0',
                                 py_version='py38',
-                                hyperparameters={'epochs': 1,
-                                                 'model-dir': 's3://articles-dataset/models',
-                                                 'output-data-dir': 's3://articles-dataset/data_output'})
+                                hyperparameters={'epochs': 5,
+                                                 'learning-rate': 0.001
+                                                 })
 
     pytorch_estimator.fit({'train': 's3://articles-dataset/dataset/train',
                            'test': 's3://articles-dataset/dataset/val',

@@ -13,9 +13,10 @@ import torchvision
 from PIL import Image
 from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
+import boto3
 
 
-def transform_model(train_dataset_path, test_dataset_path, epochs):
+def transform_model(train_dataset_path, test_dataset_path, epochs, learning_rate):
     # Data augmentation and normalization for training
     # Just normalization for validation
     data_transforms = {
@@ -61,7 +62,7 @@ def transform_model(train_dataset_path, test_dataset_path, epochs):
 
     # Observe that only parameters of final layer are being optimized as
     # opposed to before.
-    optimizer_conv = optim.SGD(model.fc.parameters(), lr=0.001, momentum=0.9)
+    optimizer_conv = optim.SGD(model.fc.parameters(), lr=learning_rate, momentum=0.9)
 
     # Decay LR by a factor of 0.1 every 7 epochs
     exp_lr_scheduler = lr_scheduler.StepLR(optimizer_conv, step_size=7, gamma=0.1)
@@ -184,8 +185,7 @@ def check_model_with_control_data(model, control_dataset_path, class_names):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--epochs', type=int, default=25)
-    # for now lr is 0.01, do we want to test different values?
-    # parser.add_argument('--learning-rate', type=float, default=0.05)
+    parser.add_argument('--learning-rate', type=float, default=0.001, dest='learning_rate')
 
     # Data, model, and output directories
     parser.add_argument('--output-data-dir', type=str, default=os.environ['SM_OUTPUT_DATA_DIR'], dest='output_data_dir')
@@ -196,8 +196,9 @@ if __name__ == '__main__':
 
     args, _ = parser.parse_known_args()
 
+    print("Using train dataset:" + str(args.train))
     print("Using number of epochs:" + str(args.epochs))
-    print("Using model-dir:" + args.model_dir)
+    print("Using learning rate:" + str(args.learning_rate))
     print("Using output-data-dir:" + args.output_data_dir)
 
     instance_type = "local"
@@ -206,14 +207,17 @@ if __name__ == '__main__':
             instance_type = "local_gpu"
     except:
         pass
-    print("Instance type = " + instance_type)
 
-    model, class_names = transform_model(args.train, args.test, args.epochs)
+    model, class_names = transform_model(args.train, args.test, args.epochs, args.learning_rate)
 
     check_model_with_control_data(model, args.control, class_names)
 
-    # ... train `model`, then save it to `model_dir`
-    #model_file_name = 'model_' + str(args.epochs) + '.pth'
-    #with open(os.path.join(args.model_dir, model_file_name), 'x') as f:
-     #   torch.save(model.state_dict(), f)
-    # TODO: Keeps getting a ErrorMessage "FileNotFoundError: [Errno 2] No such file or directory: 's3://articles-dataset/models/model_1.pth'
+    # Change it depending on the pretrained model
+    model_file_name = 'model_resnet18_' + str(args.epochs) + '.pth'
+    temp_model_path = "/opt/ml/output/"
+    model_local_path = os.path.join(temp_model_path, model_file_name)
+    torch.save(model.state_dict(), model_local_path)
+
+    s3_client = boto3.client('s3')
+    s3_client.upload_file(os.path.join(temp_model_path, model_file_name), "articles-dataset", "models/" +
+                          model_file_name)
