@@ -16,6 +16,6 @@ if __name__ == '__main__':
                                                  'learning-rate': 0.001
                                                  })
 
-    pytorch_estimator.fit({'train': 's3://articles-dataset/dataset/train',
-                           'test': 's3://articles-dataset/dataset/val',
-                           'control': 's3://articles-dataset/dataset/control'})
+    pytorch_estimator.fit({'train': 's3://articles-dataset/dataset2/train',
+                           'test': 's3://articles-dataset/dataset2/val',
+                           'control': 's3://articles-dataset/dataset2/control'})

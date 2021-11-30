@@ -213,7 +213,7 @@ if __name__ == '__main__':
     check_model_with_control_data(model, args.control, class_names)
 
     # Change it depending on the pretrained model
-    model_file_name = 'model_resnet18_' + str(args.epochs) + '.pth'
+    model_file_name = 'model_resnet18_dataset2_' + str(args.epochs) + '.pth'
     temp_model_path = "/opt/ml/output/"
     model_local_path = os.path.join(temp_model_path, model_file_name)
     torch.save(model.state_dict(), model_local_path)
