@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "aae770f2-86f2-45f9-8469-92fb63379af0",
+		"name": "image_classifier",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "predict ant",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/xavier/Downloads/dataset2/control/ants/Hormiga.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/predict",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"predict"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "predict bee",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/xavier/Downloads/dataset2/control/bees/2717418782_bd83307d9f.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/predict",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"predict"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "predict negative",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/xavier/Downloads/dataset/control/negative/00a49ce3-4ddb-4bf3-9907-af3e63b93c55.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/predict",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"predict"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "predict positive",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/xavier/Downloads/dataset/control/positive/0a794e6f-bd5e-4219-847c-17f125d09539.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/predict",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"predict"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
