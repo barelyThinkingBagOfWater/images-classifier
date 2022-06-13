@@ -2,10 +2,12 @@
 
 In the root folder you'll find a Flask service that will download a model .pth from S3 and use it to classify sent images.
 To run it locally create an .env file with the following content:
-MODEL_BUCKET=articles-dataset
-MODEL_PATH=models/model_resnet152_15.pth
-PREDICTION_CLASS_0=negative
-PREDICTION_CLASS_1=positive
+```
+MODEL_BUCKET=S3_BUCKET
+MODEL_PATH=models/model.pth
+PREDICTION_CLASS_0=categorie_0
+PREDICTION_CLASS_1=categorie_1
+```
 
 
 in the sagemaker folder you'll find scripts to interact with AWS Sagemaker to train models remotely using different parameters
